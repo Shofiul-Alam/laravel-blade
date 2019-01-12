@@ -67,6 +67,33 @@ mix.js('resources/js/app.js', 'public/js')
    #Master layout for Admin 
    Create admin.blade.php in Resources/Layout folder
 
+   #passing data to views from controller 
+
+   return view('admin.users.index', compact('users'));
+
+
+   #creating and building forms
+
+   composer require laravelcollective/html
+
+   https://laravelcollective.com/docs/5.2/html
+
+   Next, add your new provider to the providers array of config/app.php:
+
+  'providers' => [
+    // ...
+    Collective\Html\HtmlServiceProvider::class,
+    // ...
+  ],
+   
+   Finally, add two class aliases to the aliases array of config/app.php:
+
+  'aliases' => [
+    // ...
+      'Form' => Collective\Html\FormFacade::class,
+      'Html' => Collective\Html\HtmlFacade::class,
+    // ...
+  ]
    
 
 
