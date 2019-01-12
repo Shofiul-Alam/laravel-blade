@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\User;
 use App\Role;
+use App\User;
 use App\Photo;
+use Illuminate\Http\Request;
 use App\Http\Requests\UsersRequest;
-use App\Http\Requests\UsersUpdateRequest;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\UsersUpdateRequest;
 
 
 class AdminUsersController extends Controller
@@ -63,12 +64,11 @@ class AdminUsersController extends Controller
         if($request->file('file')) {
             $photo['filename'] = $request->file->store('');
             $photo['file'] = $photo['filename'];
+            $photo['name'] = $photo['filename'];
 
             $dbPhoto = Photo::create($photo);
         }
         $userRequest['photo_id'] = $dbPhoto->id;
-
-        $userRequest['password'] = bcrypt($request->password);
 
 
         User::create($userRequest);
@@ -117,24 +117,25 @@ class AdminUsersController extends Controller
 
         $input = $request->all();
 
+        if(empty(trim($input['password']))) {
+            $input = $request->except('password');
+        }
+
         if(isset($request->file)){
 
             if($user->photo) {
-                Storage::delete($user->photo->file);
+                Storage::delete($user->photo->name);
             }
             $photo['filename'] = $request->file->store('');
             $photo['file'] = $photo['filename'];
+            $photo['name'] = $photo['filename'];
 
             $dbPhoto = Photo::create($photo);
 
             $input['photo_id'] = $dbPhoto->id;
         }
 
-        if(trim($input['password'])) {
-            $input['password'] = bcrypt($input['password']);
-        } else {
-            $input = $request->except('password');
-        }
+       
 
         $user->update($input);
 
@@ -151,5 +152,21 @@ class AdminUsersController extends Controller
     public function destroy($id)
     {
         //
+        $user = User::findOrFail($id);
+
+        if($user->photo) {
+            Photo::findOrFail($user->photo->id)->delete();
+
+            Storage::delete($user->photo->name);
+        }
+
+        $user->delete();
+
+        Session::flash('deleted_user', 'The user has been deleted');
+
+        
+        
+
+        return redirect('admin/users');
     }
 }

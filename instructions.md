@@ -153,10 +153,16 @@ add
 
 
   #Security Feature 
-  1. Has to be Admin and active to get access to dashboard 
+  Has to be Admin and active to get access to dashboard 
 
-  # middleware 
+  #middleware 
+
   php artisan make:middleware 
+
+  Register the middleware in app/http/kernel.php 
+
+
+  
   
 
 

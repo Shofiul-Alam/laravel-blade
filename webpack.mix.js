@@ -20,6 +20,7 @@ mix.js('resources/js/app.js', 'public/js')
       'resources/assets/css/libs/metisMenu.css',
       'resources/assets/css/libs/sb-admin-2.css',
       'resources/assets/css/libs/styles.css',
+      // 'resources/assets/css/libs/floating-label.css',
    ], 'public/css/lib.css')
    .scripts([
       'resources/assets/js/libs/jquery.js',

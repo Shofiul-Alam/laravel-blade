@@ -79,10 +79,23 @@
             
             
         </div>
-        <div class="form-group">
-            {!! Form::Submit('Add User', ['class'=> 'btn btn-primary']) !!} 
+        <div class="form-group" style="float:left">
+            {!! Form::Submit('Update User', ['class'=> 'btn btn-primary']) !!} 
         </div>
     {!! Form::close() !!}
+    
+
+    
+    {!! Form::open(['method' => 'DELETE', 'action' => ['AdminUsersController@destroy', $user->id]]) !!}
+        <div class="form-group  style="float:left"">
+            
+            {!! Form::submit('Delete User', ['class' => 'btn btn-danger']) !!}
+            
+        </div>
+    
+    {!! Form::close() !!}
+    
+    
 
     @include('includes.form-error')
 
