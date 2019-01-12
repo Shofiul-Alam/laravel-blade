@@ -136,7 +136,32 @@ add
         ],
 
 
+ $photo['filename'] = $request->file->store('');
+
+            $photo['file'] = $this->imageRoot. '/' . $photo['filename'];
+
 #route name as link in html 
+
+
+#edit form model binding 
+  {!! Form::model($user, ['method' => 'PATCH', 'action' => ['AdminUsersController@update', $user->id], 'files' => true]) !!} // in the view 
+
+
+  ## in the controller 
+  $user = User::findOrFail($id);  
+        return view('admin.users.edit', compact('user', 'roles'));
+
+
+  #Security Feature 
+  1. Has to be Admin and active to get access to dashboard 
+
+  # middleware 
+  php artisan make:middleware 
+  
+
+
+
+
 
 
 

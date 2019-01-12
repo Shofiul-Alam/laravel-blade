@@ -10,6 +10,12 @@
         <div class="form-group">
             {!! Form::label('name', 'Name:') !!}
             {!! Form::text('name', null, ['class'=> 'form-control']) !!}
+
+            @if ($errors->has('name'))
+            <span class="invalid-feedback  text-danger" role="alert">
+                <strong>{{ $errors->first('name') }}</strong>
+            </span>
+        @endif
         </div>
 
 
