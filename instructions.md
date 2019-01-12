@@ -122,6 +122,24 @@ add this object into the controller replace Request param object
 
 #Multipart Encrypt for photo upload
 
+{!! Form::open(['method' => 'POST', 'action' => 'AdminUsersController@store', 'files' => true]) !!}
+
+in app/config/filesystem 
+add 
+
+        ],    
+
+        'images' => [  
+            'driver' => 'local',  
+            'root' => public_path('img'),  
+            'visibility' => 'public',  
+        ],
+
+
+#route name as link in html 
+
+
+
 
 
 

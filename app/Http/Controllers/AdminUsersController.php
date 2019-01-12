@@ -5,16 +5,24 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Role;
+use App\Photo;
 use App\Http\Requests\UsersRequest;
 
 
 class AdminUsersController extends Controller
 {
+    public $imageRoot;
+
+    public function setImageRoot() {
+        $this->imageRoot = isset($_ENV['APP_URL']) ? $_ENV['APP_URL'] : null;
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index()
     {
         //
@@ -48,7 +56,20 @@ class AdminUsersController extends Controller
     public function store(UsersRequest $request)
     {
         //
-       User::create($request->all());
+        $userRequest = $request->all();
+
+        if($request->file('file')) {
+            $photo['filename'] = $request->file->store('');
+            $photo['file'] = $this->imageRoot. '/' . $photo['filename'];
+
+            $dbPhoto = Photo::create($photo);
+        }
+        $userRequest['photo_id'] = $dbPhoto->id;
+
+        $userRequest['password'] = bcrypt($request->password);
+
+
+        User::create($userRequest);
 
         return redirect('/admin/users');
     }
