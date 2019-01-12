@@ -10,6 +10,9 @@ public function boot()
 
 php artisan migrate 
 
+## add a property in a migration 
+ php artisan make:migration add_photo_id_to_users 
+
 
 
 # Auth configure
@@ -94,6 +97,43 @@ mix.js('resources/js/app.js', 'public/js')
       'Html' => Collective\Html\HtmlFacade::class,
     // ...
   ]
+
+  #code Snippte 
+
+  Laravel 5 Snippet 
+  Laravel Blade Snippte
+
+  #Select elements Dynamic ones 
+  {!! Form::select('status', array(1 => 'Active', 0 => 'Not Active'), 0, ['class' => 'form-control']) !!}
+
+  ## From Database 
+  $roles = Role::pluck('name', 'id')->all(); // Inside controller 
+   {!! Form::select('role_id', ['' => 'Select Role'] + $roles, null, ['class' => 'form-control']) !!} // inside view 
+
+
+
+# password and validation for form
+
+## making request object
+php artisan make:request UsersRequest 
+
+add this object into the controller replace Request param object 
+
+
+#Multipart Encrypt for photo upload
+
+
+
+
+
+
+
+
+
+
+
+
+
    
 
 
