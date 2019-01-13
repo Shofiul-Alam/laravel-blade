@@ -124,6 +124,7 @@ class AdminUsersController extends Controller
         if(isset($request->file)){
 
             if($user->photo) {
+                $user->photo()->delete();
                 Storage::delete($user->photo->name);
             }
             $photo['filename'] = $request->file->store('');

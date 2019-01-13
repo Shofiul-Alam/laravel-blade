@@ -10,8 +10,59 @@ public function boot()
 
 php artisan migrate 
 
-## add a property in a migration 
+## add a property in a table using migration 
  php artisan make:migration add_photo_id_to_users 
+
+
+# Migration and Database Upgrade handling using DB first and Code First approach 
+
+One of the important part in larave development is to manage scalable database desing change 
+Using MySQLBench to design database change and generate migration file from there 
+
+##Issues 
+     -> If a new field will be added to a table how can the db can be upgraded without effecting data 
+     -> Properly create the relationship between tables and maintain it 
+
+## Generate Migration approach 
+
+```html
+
+composer require xethron/migrations-generator
+
+In Laravel 5.5 the service providers will automatically get registered.
+
+In older versions of the framework edit config/app.php and add this to providers section:
+
+Way\Generators\GeneratorsServiceProvider::class,
+Xethron\MigrationsGenerator\MigrationsGeneratorServiceProvider::class,
+If you want this lib only for dev, you can add the following code to your app/Providers/AppServiceProvider.php file, within the register() method:
+
+public function register()
+{
+    if ($this->app->environment() !== 'production') {
+        $this->app->register(\Way\Generators\GeneratorsServiceProvider::class);
+        $this->app->register(\Xethron\MigrationsGenerator\MigrationsGeneratorServiceProvider::class);
+    }
+    // ...
+}
+
+```
+
+
+## Generate Migration command 
+
+### Generate migrations for all tables 
+
+php artisan migrate:generate 
+
+
+### Generate migrations for particulars tables 
+php artisan migrate:generate --tables=table1,table2,table3,table4,table5
+
+
+### Ignore migrations for particulars tables 
+php artisan migrate:generate --ignores=table1,table2,table3,table4,table5
+
 
 
 
@@ -160,6 +211,10 @@ add
   php artisan make:middleware 
 
   Register the middleware in app/http/kernel.php 
+
+  #Cascade Delete based on relationship 
+
+
 
 
   
